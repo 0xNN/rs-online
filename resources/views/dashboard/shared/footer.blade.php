@@ -1,4 +1,4 @@
 <footer class="c-footer">
-  <div><a href="https://coreui.io">CoreUI</a> &copy; 2020 creativeLabs.</div>
-  <div class="ml-auto">Powered by&nbsp;<a href="https://coreui.io/">CoreUI</a></div>
+  <div><a href="{{ url('/') }}">RSUD Siti Fatimah Palembang</a> &copy; {{ date('Y') }}</div>
+  <div class="ml-auto">Powered by&nbsp;<a href="{{ url('/') }}">IT Teams</a></div>
 </footer>

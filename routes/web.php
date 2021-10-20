@@ -73,6 +73,33 @@ Route::group(['middleware' => ['get.menu']], function () {
     ]);
 
     Route::group(['middleware' => ['role:admin']], function () {
+        Route::prefix('pasien-masuk')->name('pasien-masuk.')->group(function(){
+            Route::get('/',[App\Http\Controllers\PasienMasukController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\PasienMasukController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\PasienMasukController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\PasienMasukController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\PasienMasukController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\PasienMasukController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('pasien-keluar')->name('pasien-keluar.')->group(function(){
+            Route::get('/',[App\Http\Controllers\PasienKeluarController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\PasienKeluarController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\PasienKeluarController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\PasienKeluarController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\PasienKeluarController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\PasienKeluarController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('pasien-dirawat-komorbid')->name('pasien-dirawat-komorbid.')->group(function(){
+            Route::get('/',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'destroy'])->name('destroy');
+        });
+
         Route::resource('bread',  'BreadController');   //create BREAD (resource)
         Route::resource('users',        'UsersController')->except( ['create', 'store'] );
         Route::resource('roles',        'RolesController');

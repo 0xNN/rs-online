@@ -31,9 +31,9 @@ if(!function_exists('renderDropdown')){
 ?>
 
 
-        <div class="c-sidebar-brand">
-            <img class="c-sidebar-brand-full" src="{{ url('/assets/brand/coreui-base-white.svg') }}" width="118" height="46" alt="CoreUI Logo">
-            <img class="c-sidebar-brand-minimized" src="{{ url('assets/brand/coreui-signet-white.svg') }}" width="118" height="46" alt="CoreUI Logo">
+        <div class="c-sidebar-brand" style="background-color: white">
+            <img class="c-sidebar-brand-full" src="{{ url('/assets/brand/logo_rs_fatimah.png') }}" width="118" height="46" alt="Logo RS">
+            <img class="c-sidebar-brand-minimized" src="{{ url('/assets/brand/logo_rs_fatimah.png') }}" width="118" height="46" alt="Logo RS">
         </div>
         <ul class="c-sidebar-nav">
         @if(isset($appMenus['sidebar menu']))
