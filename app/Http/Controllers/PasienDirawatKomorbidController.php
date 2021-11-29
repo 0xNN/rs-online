@@ -71,7 +71,7 @@ class PasienDirawatKomorbidController extends Controller
                 ->editColumn('action', function($row) {
                     $button = '<div class="btn-group" role="group">';
                     $button .= '<button data-toggle="tooltip" data-id="'.$row->id.'" data-original-title="Sinkron" class="sinkron btn btn-info btn-sm sinkron-post"><i class="cil-loop-circular"></i></button>';
-                    $button .= '<button data-toggle="tooltip" data-tanggal="'.$row->tanggal.'" data-id="'.$row->id.'" data-original-title="Delete" class="delete btn btn-danger btn-sm delete-post"><i class="cil-trash"></i></button>';
+                    // $button .= '<button data-toggle="tooltip" data-tanggal="'.$row->tanggal.'" data-id="'.$row->id.'" data-original-title="Delete" class="delete btn btn-danger btn-sm delete-post"><i class="cil-trash"></i></button>';
                     $button .= '</div>';
                     return $button;
                     // if($row->status_sinkron == 0) {
@@ -106,12 +106,112 @@ class PasienDirawatKomorbidController extends Controller
             return back()->withError($e->getMessage());
         }
 
-        return redirect()->route('pasien-keluar.index')->withMessage('Upload berhasil!');
+        return redirect()->route('pasien-dirawat-komorbid.index')->withMessage('Upload berhasil!');
     }
 
     public function show($id)
     {
         $data = PasienDirawatKomorbid::find($id);
         return response()->json($data);
+    }
+
+    public function sinkronisasi(Request $request)
+    {
+        $headers = config('custom.headers');
+        $url = config('custom.url_api_v2').'PasienDirawatKomorbid';
+
+        $postDataArr = array(
+            'tanggal' => $request->tanggal,
+            'icu_dengan_ventilator_suspect_l' => $request->icu_dengan_ventilator_suspect_l,
+            'icu_dengan_ventilator_suspect_p' => $request->icu_dengan_ventilator_suspect_p,
+            'icu_dengan_ventilator_confirm_l' => $request->icu_dengan_ventilator_confirm_l,
+            'icu_dengan_ventilator_confirm_p' => $request->icu_dengan_ventilator_confirm_p,
+            'icu_tanpa_ventilator_suspect_l' => $request->icu_tanpa_ventilator_suspect_l,
+            'icu_tanpa_ventilator_suspect_p' => $request->icu_tanpa_ventilator_suspect_p,
+            'icu_tanpa_ventilator_confirm_l' => $request->icu_tanpa_ventilator_confirm_l,
+            'icu_tanpa_ventilator_confirm_p' => $request->icu_tanpa_ventilator_confirm_p,
+            'icu_tekanan_negatif_dengan_ventilator_suspect_l' => $request->icu_tekanan_negatif_dengan_ventilator_suspect_l,
+            'icu_tekanan_negatif_dengan_ventilator_suspect_p' => $request->icu_tekanan_negatif_dengan_ventilator_suspect_p,
+            'icu_tekanan_negatif_dengan_ventilator_confirm_l' => $request->icu_tekanan_negatif_dengan_ventilator_confirm_l,
+            'icu_tekanan_negatif_dengan_ventilator_confirm_p' => $request->icu_tekanan_negatif_dengan_ventilator_confirm_p,
+            'icu_tekanan_negatif_tanpa_ventilator_suspect_l' => $request->icu_tekanan_negatif_tanpa_ventilator_suspect_l,
+            'icu_tekanan_negatif_tanpa_ventilator_suspect_p' => $request->icu_tekanan_negatif_tanpa_ventilator_suspect_p,
+            'icu_tekanan_negatif_tanpa_ventilator_confirm_l' => $request->icu_tekanan_negatif_tanpa_ventilator_confirm_l,
+            'icu_tekanan_negatif_tanpa_ventilator_confirm_p' => $request->icu_tekanan_negatif_tanpa_ventilator_confirm_p,
+            'isolasi_tekanan_negatif_suspect_l' => $request->isolasi_tekanan_negatif_suspect_l,
+            'isolasi_tekanan_negatif_suspect_p' => $request->isolasi_tekanan_negatif_suspect_p,
+            'isolasi_tekanan_negatif_confirm_l' => $request->isolasi_tekanan_negatif_confirm_l,
+            'isolasi_tekanan_negatif_confirm_p' => $request->isolasi_tekanan_negatif_confirm_p,
+            'isolasi_tanpa_tekanan_negatif_suspect_l' => $request->isolasi_tanpa_tekanan_negatif_suspect_l,
+            'isolasi_tanpa_tekanan_negatif_suspect_p' => $request->isolasi_tanpa_tekanan_negatif_suspect_p,
+            'isolasi_tanpa_tekanan_negatif_confirm_l' => $request->isolasi_tanpa_tekanan_negatif_confirm_l,
+            'isolasi_tanpa_tekanan_negatif_confirm_p' => $request->isolasi_tanpa_tekanan_negatif_confirm_p,
+            'nicu_khusus_covid_suspect_l' => $request->nicu_khusus_covid_suspect_l,
+            'nicu_khusus_covid_suspect_p' => $request->nicu_khusus_covid_suspect_p,
+            'nicu_khusus_covid_confirm_l' => $request->nicu_khusus_covid_confirm_l,
+            'nicu_khusus_covid_confirm_p' => $request->nicu_khusus_covid_confirm_p,
+            'picu_khusus_covid_suspect_l' => $request->picu_khusus_covid_suspect_l,
+            'picu_khusus_covid_suspect_p' => $request->picu_khusus_covid_suspect_p,
+            'picu_khusus_covid_confirm_l' => $request->picu_khusus_covid_confirm_l,
+            'picu_khusus_covid_confirm_p' => $request->picu_khusus_covid_confirm_p,
+        );
+        $response = Http::withHeaders($headers)
+                    ->post($url,$postDataArr);
+
+        if($response->status() == 200) {
+            $obj = $response->object()->RekapPasienDirawatKomorbid;
+            if($obj[0]->status == 200) {
+                $data = PasienDirawatKomorbid::find($request->id);
+                $data->tanggal_sinkron = date('Y-m-d');
+                $data->status_sinkron = 1;
+                $data->save();
+
+                return response()->json([
+                    'code' => 200,
+                    'message' => $obj[0]->message
+                ],200);
+            } else {
+                return response()->json([
+                    'code' => 401,
+                    'message' => $obj[0]->message
+                ],401);
+            }
+        } else {
+            return response()->json([
+                'code' => 401,
+                'message' => 'Kesalahan Server!'
+            ],401);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $model = PasienDirawatKomorbid::where('id', $id)->first();
+
+        $headers = config('custom.headers');
+        $url = config('custom.url_api_v2').'PasienDirawatKomorbid';
+
+        $deleteData = array(
+            'tanggal' => $model->tanggal
+        );
+
+        $response = Http::withHeaders($headers)->delete($url,$deleteData);
+
+        // dd($response->object());
+        if($response->status() == 200) {
+            // PasienMasuk::where('id', $id)->delete();
+            $model = PasienDirawatKomorbid::find($id);
+            $model->status_sinkron = 0;
+            $model->save();
+            return response()->json([
+                'code' => 200,
+                'message' => 'Berhasil dihapus.'
+            ],200);
+        } else {
+            return response()->json([
+                'code' => 401,
+                'message' => 'Kesalahan Server!'
+            ],401);
+        }
     }
 }

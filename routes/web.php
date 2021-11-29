@@ -100,6 +100,82 @@ Route::group(['middleware' => ['get.menu']], function () {
             Route::delete('/{id}',[App\Http\Controllers\PasienDirawatKomorbidController::class, 'destroy'])->name('destroy');
         });
 
+        Route::prefix('pasien-dirawat-tanpa-komorbid')->name('pasien-dirawat-tanpa-komorbid.')->group(function(){
+            Route::get('/',[App\Http\Controllers\PasienDirawatNonKomorbidController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\PasienDirawatNonKomorbidController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\PasienDirawatNonKomorbidController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\PasienDirawatNonKomorbidController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\PasienDirawatNonKomorbidController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\PasienDirawatNonKomorbidController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('data-ruangan-tempat-tidur')->name('data-ruangan-tempat-tidur.')->group(function(){
+            Route::get('/',[App\Http\Controllers\DataRuanganTempatTidurController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\DataRuanganTempatTidurController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\DataRuanganTempatTidurController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\DataRuanganTempatTidurController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\DataRuanganTempatTidurController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\DataRuanganTempatTidurController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('data-sdm')->name('data-sdm.')->group(function(){
+            Route::get('/',[App\Http\Controllers\DataSdmController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\DataSdmController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\DataSdmController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\DataSdmController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\DataSdmController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\DataSdmController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('data-apd')->name('data-apd.')->group(function(){
+            Route::get('/',[App\Http\Controllers\DataApdController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\DataApdController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\DataApdController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\DataApdController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\DataApdController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\DataApdController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('igd-triase')->name('igd-triase.')->group(function(){
+            Route::get('/',[App\Http\Controllers\IgdTriaseController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\IgdTriaseController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\IgdTriaseController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\IgdTriaseController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\IgdTriaseController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\IgdTriaseController::class, 'destroy'])->name('destroy');
+            Route::post('/range',[App\Http\Controllers\IgdTriaseController::class, 'range'])->name('range');
+        });
+
+        Route::prefix('pcr-nakes')->name('pcr-nakes.')->group(function(){
+            Route::get('/',[App\Http\Controllers\PcrNakesController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\PcrNakesController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\PcrNakesController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\PcrNakesController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\PcrNakesController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\PcrNakesController::class, 'destroy'])->name('destroy');
+            Route::post('/range',[App\Http\Controllers\PcrNakesController::class, 'range'])->name('range');
+        });
+
+        Route::prefix('harian-nakes-terinfeksi')->name('harian-nakes-terinfeksi.')->group(function(){
+            Route::get('/',[App\Http\Controllers\NakesTerinfeksiController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\NakesTerinfeksiController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\NakesTerinfeksiController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\NakesTerinfeksiController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\NakesTerinfeksiController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\NakesTerinfeksiController::class, 'destroy'])->name('destroy');
+            Route::post('/range',[App\Http\Controllers\NakesTerinfeksiController::class, 'range'])->name('range');
+        });
+
+        Route::prefix('oksigenasi')->name('oksigenasi.')->group(function(){
+            Route::get('/',[App\Http\Controllers\OksigenasiController::class, 'index'])->name('index');
+            Route::get('/create',[App\Http\Controllers\OksigenasiController::class, 'create'])->name('create');
+            Route::post('/',[App\Http\Controllers\OksigenasiController::class, 'store'])->name('store');
+            Route::get('/{id}',[App\Http\Controllers\OksigenasiController::class, 'show'])->name('show');
+            Route::post('/sinkronisasi',[App\Http\Controllers\OksigenasiController::class, 'sinkronisasi'])->name('sinkronisasi');
+            Route::delete('/{id}',[App\Http\Controllers\OksigenasiController::class, 'destroy'])->name('destroy');
+            Route::post('/range',[App\Http\Controllers\OksigenasiController::class, 'range'])->name('range');
+        });
+
         Route::resource('bread',  'BreadController');   //create BREAD (resource)
         Route::resource('users',        'UsersController')->except( ['create', 'store'] );
         Route::resource('roles',        'RolesController');

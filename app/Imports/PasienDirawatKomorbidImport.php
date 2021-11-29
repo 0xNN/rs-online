@@ -6,6 +6,7 @@ use App\Models\PasienDirawatKomorbid;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
 class PasienDirawatKomorbidImport implements ToCollection, WithHeadingRow
 {
@@ -18,8 +19,8 @@ class PasienDirawatKomorbidImport implements ToCollection, WithHeadingRow
     {
         foreach($rows as $row)
         {
-            PasienDirawatKomorbid::updateOrCreate(['tanggal' => $row['tanggal']],[
-                'tanggal' => $row['tanggal'],
+            PasienDirawatKomorbid::updateOrCreate(['tanggal' => Date::excelToDateTimeObject($row['tanggal'])->format('Y-m-d')],[
+                'tanggal' => Date::excelToDateTimeObject($row['tanggal'])->format('Y-m-d'),
                 'icu_dengan_ventilator_suspect_l' => $row['icu_dengan_ventilator_suspect_l'],
                 'icu_dengan_ventilator_suspect_p' => $row['icu_dengan_ventilator_suspect_p'],
                 'icu_dengan_ventilator_confirm_l' => $row['icu_dengan_ventilator_confirm_l'],
