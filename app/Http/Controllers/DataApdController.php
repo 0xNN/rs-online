@@ -23,9 +23,9 @@ class DataApdController extends Controller
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $headers = [
-                'X-rs-id' => '1671347',
+                'X-rs-id' => $headers['X-rs-id'],
                 'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => '112233'
+                'X-pass' => $headers['X-pass']
             ];
             $url = config('custom.url_api').'Fasyankes/apd';
             $response = Http::withHeaders($headers)->get($url);
@@ -48,7 +48,7 @@ class DataApdController extends Controller
         }
 
         if($request->ajax()) {
-            $model = DataApd::orderBy('id','desc');
+            $model = DataApd::orderBy('id','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -88,9 +88,9 @@ class DataApdController extends Controller
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $headers = [
-                'X-rs-id' => '1671347',
+                'X-rs-id' => $headers['X-rs-id'],
                 'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => '112233'
+                'X-pass' => $headers['X-pass']
             ];
             $url = config('custom.url_api').'Referensi/kebutuhan_apd';
             $response = Http::withHeaders($headers)->get($url);
@@ -104,15 +104,22 @@ class DataApdController extends Controller
 
     public function store()
     {
-        // dd(request()->all());
-        $id_kebutuhan = request()->master_id_kebutuhan;
-        try {
-            Excel::import(new DataApdImport($id_kebutuhan), request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            $id_kebutuhan = request()->master_id_kebutuhan;
+            try {
+                Excel::import(new DataApdImport($id_kebutuhan), request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('data-apd.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('data-apd.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatAPD.xlsx'))) {
+                return response()->download(storage_path('FormatAPD.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)
@@ -136,9 +143,9 @@ class DataApdController extends Controller
         $now =  new DateTime();
         $now->format('Y-m-d H:i:s');
         $headers = [
-            'X-rs-id' => '1671347',
+            'X-rs-id' => $headers['X-rs-id'],
             'X-Timestamp' => $now->getTimestamp(),
-            'X-pass' => '112233'
+            'X-pass' => $headers['X-pass']
         ];
 
         // dd($postDataArr);
@@ -240,9 +247,9 @@ class DataApdController extends Controller
         $now = new DateTime();
         $now->format('Y-m-d H:i:s');
         $headers = [
-            'X-rs-id' => '1671347',
+            'X-rs-id' => $headers['X-rs-id'],
             'X-Timestamp' => $now->getTimestamp(),
-            'X-pass' => '112233',
+            'X-pass' => $headers['X-pass'],
             'Id_kebutuhan' => $model->id_kebutuhan
         ];
         $url = config('custom.url_api').'Fasyankes/apd';

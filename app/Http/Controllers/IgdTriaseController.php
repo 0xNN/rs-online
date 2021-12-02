@@ -50,7 +50,7 @@ class IgdTriaseController extends Controller
         }
 
         if($request->ajax()) {
-            $model = IgdTriase::orderBy('tanggal','desc');
+            $model = IgdTriase::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -86,13 +86,21 @@ class IgdTriaseController extends Controller
 
     public function store()
     {
-        try {
-            Excel::import(new IgdTriaseImport, request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new IgdTriaseImport, request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('igd-triase.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('igd-triase.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatIGDTriase.xlsx'))) {
+                return response()->download(storage_path('FormatIGDTriase.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)

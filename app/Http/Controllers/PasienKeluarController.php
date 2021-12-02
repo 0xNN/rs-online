@@ -8,6 +8,7 @@ use App\Imports\PasienKeluarImport;
 use App\Models\PasienKeluar;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -58,7 +59,7 @@ class PasienKeluarController extends Controller
         }
 
         if($request->ajax()) {
-            $model = PasienKeluar::orderBy('tanggal','desc');
+            $model = PasienKeluar::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -94,13 +95,21 @@ class PasienKeluarController extends Controller
 
     public function store()
     {
-        try {
-            Excel::import(new PasienKeluarImport, request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new PasienKeluarImport, request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('pasien-keluar.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('pasien-keluar.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatPasienKeluar.xlsx'))) {
+                return response()->download(storage_path('FormatPasienKeluar.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)

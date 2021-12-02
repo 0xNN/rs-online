@@ -111,7 +111,7 @@ class NakesTerinfeksiController extends Controller
         }
 
         if($request->ajax()) {
-            $model = NakesTerinfeksi::orderBy('tanggal','desc');
+            $model = NakesTerinfeksi::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -147,13 +147,21 @@ class NakesTerinfeksiController extends Controller
 
     public function store()
     {
-        try {
-            Excel::import(new NakesTerinfeksiImport, request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new NakesTerinfeksiImport, request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('harian-nakes-terinfeksi.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('harian-nakes-terinfeksi.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatNakesTerinfeksi.xlsx'))) {
+                return response()->download(storage_path('FormatNakesTerinfeksi.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)

@@ -32,7 +32,8 @@
           </div>
         </div>
         <div class="card-footer">
-          <button type="submit" class="btn btn-success">Proses</button>
+          <button type="submit" class="btn btn-success" name="proses">Proses</button>
+          <button type="submit" class="btn btn-info" name="contoh_format">Contoh Format Excel</button>
         </div>
     </form>
   </div>

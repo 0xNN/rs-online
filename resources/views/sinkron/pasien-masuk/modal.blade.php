@@ -19,39 +19,39 @@
               </tr>
               <tr>
                 <th>IGD Suspect L</th>
-                <th><input class="form-control form-control-sm is-valid" id="igd_suspect_l" name="igd_suspect_l" readonly></th>
+                <th><input type="number" class="form-control form-control-sm is-valid" id="igd_suspect_l" name="igd_suspect_l"></th>
                 <th>IGD Suspect P</th>
-                <th><input class="form-control form-control-sm" id="igd_suspect_p" name="igd_suspect_p" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="igd_suspect_p" name="igd_suspect_p"></th>
               </tr>
               <tr>
                 <th>IGD Confirm L</th>
-                <th><input class="form-control form-control-sm" id="igd_confirm_l" name="igd_confirm_l" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="igd_confirm_l" name="igd_confirm_l"></th>
                 <th>IGD Confirm P</th>
-                <th><input class="form-control form-control-sm" id="igd_confirm_p" name="igd_confirm_p" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="igd_confirm_p" name="igd_confirm_p"></th>
               </tr>
               <tr>
                 <th>RJ Suspect L</th>
-                <th><input class="form-control form-control-sm" id="rj_suspect_l" name="rj_suspect_l" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="rj_suspect_l" name="rj_suspect_l"></th>
                 <th>RJ Suspect P</th>
-                <th><input class="form-control form-control-sm" id="rj_suspect_p" name="rj_suspect_p" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="rj_suspect_p" name="rj_suspect_p"></th>
               </tr>
               <tr>
                 <th>RJ Confirm L</th>
-                <th><input class="form-control form-control-sm" id="rj_confirm_l" name="rj_confirm_l" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="rj_confirm_l" name="rj_confirm_l"></th>
                 <th>RJ Confirm P</th>
-                <th><input class="form-control form-control-sm" id="rj_confirm_p" name="rj_confirm_p" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="rj_confirm_p" name="rj_confirm_p"></th>
               </tr>
               <tr>
                 <th>RI Suspect L</th>
-                <th><input class="form-control form-control-sm" id="ri_suspect_l" name="ri_suspect_l" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="ri_suspect_l" name="ri_suspect_l"></th>
                 <th>RI Suspect P</th>
-                <th><input class="form-control form-control-sm" id="ri_suspect_p" name="ri_suspect_p" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="ri_suspect_p" name="ri_suspect_p"></th>
               </tr>
               <tr>
                 <th>RI Confirm L</th>
-                <th><input class="form-control form-control-sm" id="ri_confirm_l" name="ri_confirm_l" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="ri_confirm_l" name="ri_confirm_l"></th>
                 <th>RI Confirm P</th>
-                <th><input class="form-control form-control-sm" id="ri_confirm_p" name="ri_confirm_p" readonly></th>
+                <th><input type="number" class="form-control form-control-sm" id="ri_confirm_p" name="ri_confirm_p"></th>
               </tr>
             </table>
           </div>

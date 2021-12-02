@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\OksigenasiImport;
 use App\Models\Oksigenasi;
 use Carbon\Carbon;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OksigenasiController extends Controller
 {
@@ -56,7 +59,7 @@ class OksigenasiController extends Controller
         }
 
         if($request->ajax()) {
-            $model = Oksigenasi::orderBy('tanggal','desc');
+            $model = Oksigenasi::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -117,9 +120,38 @@ class OksigenasiController extends Controller
 
     public function create()
     {
-
+        return view('sinkron.oksigenasi.create');
     }
     
+    public function store()
+    {
+        $satuan = ['m3','liter','kg','galon','ton'];
+        if(!in_array(request()->satuan_p_cair, $satuan)) {
+            return back()->withError('Anda melakukan tindakan salah!');
+        }
+
+        if(!in_array(request()->satuan_k_isi_cair, $satuan)) {
+            return back()->withError('Anda melakukan tindakan salah!');
+        }
+
+        $data = [
+            'satuan_p_cair' => request()->p_cair,
+            'satuan_k_isi_cair' => request()->k_isi_cair
+        ];
+
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new OksigenasiImport($data), request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('oksigenasi.index')->withMessage('Upload berhasil!');
+        }
+        if(request()->has('contoh_format')) {
+            return response()->download(storage_path('FormatOksigenasi.xlsx'));
+        }
+    }
+
     function konversi($nilai, $satuan)
     {
         $konversi = 0;
@@ -139,6 +171,21 @@ class OksigenasiController extends Controller
 
     public function sinkronisasi(Request $request)
     {
+        $satuan = ['m3','liter','kg','galon','ton'];
+        if(!in_array($request->satuan_p_cair, $satuan)) {
+            return response()->json([
+                'code' => 401,
+                'message' => 'Anda melakukan tindakan buruk!'
+            ],401);
+        }
+
+        if(!in_array($request->satuan_k_isi_cair, $satuan)) {
+            return response()->json([
+                'code' => 401,
+                'message' => 'Anda melakukan tindakan buruk!'
+            ],401);
+        }
+
         $headers = config('custom.headers');
         $url = config('custom.url_api').'Logistik/oksigen';
 

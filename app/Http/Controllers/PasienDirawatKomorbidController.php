@@ -64,7 +64,7 @@ class PasienDirawatKomorbidController extends Controller
         }
 
         if($request->ajax()) {
-            $model = PasienDirawatKomorbid::orderBy('tanggal','desc');
+            $model = PasienDirawatKomorbid::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -100,13 +100,17 @@ class PasienDirawatKomorbidController extends Controller
 
     public function store()
     {
-        try {
-            Excel::import(new PasienDirawatKomorbidImport, request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new PasienDirawatKomorbidImport, request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('pasien-dirawat-komorbid.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('pasien-dirawat-komorbid.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            return response()->download(storage_path('FormatKomorbid.xlsx'));
+        }
     }
 
     public function show($id)

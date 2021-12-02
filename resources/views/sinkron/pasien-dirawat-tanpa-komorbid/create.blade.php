@@ -6,7 +6,7 @@
     @if (session('error'))
       <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
-    <form action="{{ route('pasien-dirawat-komorbid.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('pasien-dirawat-tanpa-komorbid.store') }}" method="post" enctype="multipart/form-data">
       <div class="card">
         <div class="card-header">Upload File</div>
         <div class="card-body">
@@ -19,7 +19,8 @@
           </div>
         </div>
         <div class="card-footer">
-          <button type="submit" class="btn btn-success">Proses</button>
+          <button type="submit" class="btn btn-success" name="proses">Proses</button>
+          <button type="submit" class="btn btn-info" name="contoh_format">Contoh Format Excel</button>
         </div>
     </form>
   </div>

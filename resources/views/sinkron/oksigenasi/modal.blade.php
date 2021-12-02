@@ -47,27 +47,27 @@
               </tr>
               <tr>
                 <th>P Cair</th>
-                <th><input class="form-control form-control-sm" id="p_cair" name="p_cair"></th>
+                <th><input type="number" class="form-control form-control-sm" id="p_cair" name="p_cair"></th>
                 <th>P Tabung Kecil</th>
-                <th><input class="form-control form-control-sm" id="p_tabung_kecil" name="p_tabung_kecil"></th>
+                <th><input type="number" class="form-control form-control-sm" id="p_tabung_kecil" name="p_tabung_kecil"></th>
               </tr>
               <tr>
                 <th>P Tabung Sedang</th>
-                <th><input class="form-control form-control-sm" id="p_tabung_sedang" name="p_tabung_sedang"></th>
+                <th><input type="number" class="form-control form-control-sm" id="p_tabung_sedang" name="p_tabung_sedang"></th>
                 <th>P Tabung Besar</th>
-                <th><input class="form-control form-control-sm" id="p_tabung_besar" name="p_tabung_besar"></th>
+                <th><input type="number" class="form-control form-control-sm" id="p_tabung_besar" name="p_tabung_besar"></th>
               </tr>
               <tr>
                 <th>K Isi Cair</th>
-                <th><input class="form-control form-control-sm" id="k_isi_cair" name="k_isi_cair"></th>
+                <th><input type="number" class="form-control form-control-sm" id="k_isi_cair" name="k_isi_cair"></th>
                 <th>K Isi Tabung Kecil</th>
-                <th><input class="form-control form-control-sm" id="k_isi_tabung_kecil" name="k_isi_tabung_kecil"></th>
+                <th><input type="number" class="form-control form-control-sm" id="k_isi_tabung_kecil" name="k_isi_tabung_kecil"></th>
               </tr>
               <tr>
                 <th>K Isi Tabung Sedang</th>
-                <th><input class="form-control form-control-sm" id="k_isi_tabung_sedang" name="k_isi_tabung_sedang"></th>
+                <th><input type="number" class="form-control form-control-sm" id="k_isi_tabung_sedang" name="k_isi_tabung_sedang"></th>
                 <th>K Isi Tabung Besar</th>
-                <th><input class="form-control form-control-sm" id="k_isi_tabung_besar" name="k_isi_tabung_besar"></th>
+                <th><input type="number" class="form-control form-control-sm" id="k_isi_tabung_besar" name="k_isi_tabung_besar"></th>
               </tr>
             </table>
           </div>

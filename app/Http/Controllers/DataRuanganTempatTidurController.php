@@ -23,9 +23,9 @@ class DataRuanganTempatTidurController extends Controller
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $headers = [
-                'X-rs-id' => '1671347',
+                'X-rs-id' => $headers['X-rs-id'],
                 'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => '112233'
+                'X-pass' => $headers['X-pass']
             ];
             $url = config('custom.url_api').'Fasyankes';
             $response = Http::withHeaders($headers)->get($url);
@@ -57,7 +57,7 @@ class DataRuanganTempatTidurController extends Controller
         }
 
         if($request->ajax()) {
-            $model = DataRuanganTempatTidur::orderBy('id','desc');
+            $model = DataRuanganTempatTidur::orderBy('id','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -97,9 +97,9 @@ class DataRuanganTempatTidurController extends Controller
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $headers = [
-                'X-rs-id' => '1671347',
+                'X-rs-id' => $headers['X-rs-id'],
                 'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => '112233'
+                'X-pass' => $headers['X-pass']
             ];
             $url = config('custom.url_api').'Referensi/tempat_tidur';
             $response = Http::withHeaders($headers)->get($url);
@@ -114,15 +114,23 @@ class DataRuanganTempatTidurController extends Controller
     public function store()
     {
         // dd(request()->all());
-        $tt = request()->nama_master_tt;
-        $id_tt = request()->kode_master_tt;
-        try {
-            Excel::import(new DataRuanganTempatTidurImport($id_tt, $tt), request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            $tt = request()->nama_master_tt;
+            $id_tt = request()->kode_master_tt;
+            try {
+                Excel::import(new DataRuanganTempatTidurImport($id_tt, $tt), request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('data-ruangan-tempat-tidur.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('data-ruangan-tempat-tidur.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatRuangTempatTidur.xlsx'))) {
+                return response()->download(storage_path('FormatRuangTempatTidur.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)
@@ -151,9 +159,9 @@ class DataRuanganTempatTidurController extends Controller
         $now =  new DateTime();
         $now->format('Y-m-d H:i:s');
         $headers = [
-            'X-rs-id' => '1671347',
+            'X-rs-id' => $headers['X-rs-id'],
             'X-Timestamp' => $now->getTimestamp(),
-            'X-pass' => '112233'
+            'X-pass' => $headers['X-pass']
         ];
 
         // dd($postDataArr);
@@ -227,9 +235,9 @@ class DataRuanganTempatTidurController extends Controller
         $now = new DateTime();
         $now->format('Y-m-d H:i:s');
         $headers = [
-            'X-rs-id' => '1671347',
+            'X-rs-id' => $headers['X-rs-id'],
             'X-Timestamp' => $now->getTimestamp(),
-            'X-pass' => '112233'
+            'X-pass' => $headers['X-pass']
         ];
         $url = config('custom.url_api').'Fasyankes';
 

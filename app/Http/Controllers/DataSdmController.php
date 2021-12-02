@@ -23,9 +23,9 @@ class DataSdmController extends Controller
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $headers = [
-                'X-rs-id' => '1671347',
+                'X-rs-id' => $headers['X-rs-id'],
                 'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => '112233'
+                'X-pass' => $headers['X-pass']
             ];
             $url = config('custom.url_api').'Fasyankes/sdm';
             $response = Http::withHeaders($headers)->get($url);
@@ -49,7 +49,7 @@ class DataSdmController extends Controller
         }
 
         if($request->ajax()) {
-            $model = DataSdm::orderBy('id','desc');
+            $model = DataSdm::orderBy('id','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -89,9 +89,9 @@ class DataSdmController extends Controller
             $now = new DateTime();
             $now->format('Y-m-d H:i:s');
             $headers = [
-                'X-rs-id' => '1671347',
+                'X-rs-id' => $headers['X-rs-id'],
                 'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => '112233'
+                'X-pass' => $headers['X-pass']
             ];
             $url = config('custom.url_api').'Referensi/kebutuhan_sdm';
             $response = Http::withHeaders($headers)->get($url);
@@ -105,19 +105,24 @@ class DataSdmController extends Controller
 
     public function store()
     {
-        // dd(request()->all());
-        $id_kebutuhan = request()->master_id_kebutuhan;
-        $data_sdm = DataSdm::where('id_kebutuhan', $id_kebutuhan)->first();
-        
-        if($data_sdm != null) return redirect()->route('data-sdm.index')->withMessage('Data sudah ada! Silahkan edit ketika sinkronisasi.');
-        
-        try {
-            Excel::import(new DataSdmImport($id_kebutuhan), request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            $id_kebutuhan = request()->master_id_kebutuhan;
+            $data_sdm = DataSdm::where('id_kebutuhan', $id_kebutuhan)->first();
+            if($data_sdm != null) return redirect()->route('data-sdm.index')->withMessage('Data sudah ada! Silahkan edit ketika sinkronisasi.');
+            try {
+                Excel::import(new DataSdmImport($id_kebutuhan), request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('data-sdm.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('data-sdm.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatSDM.xlsx'))) {
+                return response()->download(storage_path('FormatSDM.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)
@@ -141,9 +146,9 @@ class DataSdmController extends Controller
         $now =  new DateTime();
         $now->format('Y-m-d H:i:s');
         $headers = [
-            'X-rs-id' => '1671347',
+            'X-rs-id' => $headers['X-rs-id'],
             'X-Timestamp' => $now->getTimestamp(),
-            'X-pass' => '112233'
+            'X-pass' => $headers['X-pass']
         ];
 
         // dd($postDataArr);
@@ -245,9 +250,9 @@ class DataSdmController extends Controller
         $now = new DateTime();
         $now->format('Y-m-d H:i:s');
         $headers = [
-            'X-rs-id' => '1671347',
+            'X-rs-id' => $headers['X-rs-id'],
             'X-Timestamp' => $now->getTimestamp(),
-            'X-pass' => '112233',
+            'X-pass' => $headers['X-pass'],
             'Id_kebutuhan' => $model->id_kebutuhan
         ];
         $url = config('custom.url_api').'Fasyankes/sdm';

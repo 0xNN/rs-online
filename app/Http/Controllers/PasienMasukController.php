@@ -43,7 +43,7 @@ class PasienMasukController extends Controller
         }
 
         if($request->ajax()) {
-            $model = PasienMasuk::orderBy('tanggal','desc');
+            $model = PasienMasuk::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -79,14 +79,17 @@ class PasienMasukController extends Controller
 
     public function store()
     {
-        try {
-            Excel::import(new PasienMasukImport, request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError('Terjadi kesalahan!');
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new PasienMasukImport, request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError('Terjadi kesalahan!');
+            }
+            return redirect()->route('pasien-masuk.index')->withMessage('Upload berhasil!');
         }
-
-        // return view('sinkron.pasien-masuk.index');
-        return redirect()->route('pasien-masuk.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            return response()->download(storage_path('FormatPasienMasuk.xlsx'));
+        }
     }
 
     public function show($id)
@@ -122,6 +125,18 @@ class PasienMasukController extends Controller
             $obj = $response->object()->RekapPasienMasuk;
             if($obj[0]->status == 200) {
                 $data = PasienMasuk::find($request->id);
+                $data->igd_suspect_l = $request->igd_suspect_l;
+                $data->igd_suspect_p = $request->igd_suspect_p;
+                $data->igd_confirm_l = $request->igd_confirm_l;
+                $data->igd_confirm_p = $request->igd_confirm_p;
+                $data->rj_suspect_l = $request->rj_suspect_l;
+                $data->rj_suspect_p = $request->rj_suspect_p;
+                $data->rj_confirm_l = $request->rj_confirm_l;
+                $data->rj_confirm_p = $request->rj_confirm_p;
+                $data->ri_suspect_l = $request->ri_suspect_l;
+                $data->ri_suspect_p = $request->ri_suspect_p;
+                $data->ri_confirm_l = $request->ri_confirm_l;
+                $data->ri_confirm_p = $request->ri_confirm_p;
                 $data->tanggal_sinkron = date('Y-m-d');
                 $data->status_sinkron = 1;
                 $data->save();

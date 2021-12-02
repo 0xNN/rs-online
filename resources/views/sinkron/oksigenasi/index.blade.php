@@ -27,11 +27,11 @@
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Dari</label>
                   </div>
-                  <input type="text" class="form-control" id="start_date" name="start_date">
+                  <input type="text" class="form-control" id="start_date" name="start_date" placeholder="YYYY-MM-DD" readonly>
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Sampai</label>
                   </div>
-                  <input type="text" class="form-control" id="end_date" name="end_date">
+                  <input type="text" class="form-control" id="end_date" name="end_date" placeholder="YYYY-MM-DD" readonly>
                 </div>
               </th>
             </tr>
@@ -88,6 +88,7 @@
 
 @section('javascript')
 {{-- <script src="{{ asset('js/main.js') }}" defer></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>

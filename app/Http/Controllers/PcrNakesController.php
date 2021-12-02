@@ -90,7 +90,7 @@ class PcrNakesController extends Controller
         }
 
         if($request->ajax()) {
-            $model = PcrNakes::orderBy('tanggal','desc');
+            $model = PcrNakes::orderBy('tanggal','desc')->get();
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
@@ -141,13 +141,21 @@ class PcrNakesController extends Controller
 
     public function store()
     {
-        try {
-            Excel::import(new PcrNakesImport, request()->file('file'));
-        } catch(Exception $e) {
-            return back()->withError($e->getMessage());
+        if(request()->has('proses')) {
+            try {
+                Excel::import(new PcrNakesImport, request()->file('file'));
+            } catch(Exception $e) {
+                return back()->withError($e->getMessage());
+            }
+            return redirect()->route('pcr-nakes.index')->withMessage('Upload berhasil!');
         }
-
-        return redirect()->route('pcr-nakes.index')->withMessage('Upload berhasil!');
+        if(request()->has('contoh_format')) {
+            if(file_exists(storage_path('FormatPCRNakes.xlsx'))) {
+                return response()->download(storage_path('FormatPCRNakes.xlsx'));
+            } else {
+                return back()->withError('File tidak ditemukan!');
+            }
+        }
     }
 
     public function show($id)
