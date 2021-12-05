@@ -19,17 +19,19 @@ class DataApdController extends Controller
         $response = Http::withHeaders($headers)->get($url);
 
         $obj = $response->object()->apd;
-        if(json_decode($obj[0]->message)->response == "Timestamp expired") {
-            $now = new DateTime();
-            $now->format('Y-m-d H:i:s');
-            $headers = [
-                'X-rs-id' => $headers['X-rs-id'],
-                'X-Timestamp' => $now->getTimestamp(),
-                'X-pass' => $headers['X-pass']
-            ];
-            $url = config('custom.url_api').'Fasyankes/apd';
-            $response = Http::withHeaders($headers)->get($url);
-            $obj = $response->object()->apd;
+        if(isset($obj[0]->message)) {
+            if(json_decode($obj[0]->message)->response == "Timestamp expired") {
+                $now = new DateTime();
+                $now->format('Y-m-d H:i:s');
+                $headers = [
+                    'X-rs-id' => $headers['X-rs-id'],
+                    'X-Timestamp' => $now->getTimestamp(),
+                    'X-pass' => $headers['X-pass']
+                ];
+                $url = config('custom.url_api').'Fasyankes/apd';
+                $response = Http::withHeaders($headers)->get($url);
+                $obj = $response->object()->apd;
+            }
         }
 
         foreach($obj as $data) {
