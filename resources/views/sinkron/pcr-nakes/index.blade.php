@@ -27,11 +27,11 @@
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Dari</label>
                   </div>
-                  <input type="text" class="form-control" id="start_date" name="start_date">
+                  <input type="text" class="form-control" id="start_date" name="start_date" placeholder="YYYY-MM-DD" readonly>
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Sampai</label>
                   </div>
-                  <input type="text" class="form-control" id="end_date" name="end_date">
+                  <input type="text" class="form-control" id="end_date" name="end_date" placeholder="YYYY-MM-DD" readonly>
                 </div>
               </th>
             </tr>
