@@ -72,6 +72,13 @@ class DataRuanganTempatTidurController extends Controller
                     //     return '<span class="badge badge-success"><i class="cil-check-alt"></i></span>';
                     // }
                 })
+                ->editColumn('covid', function($row) {
+                    if($row->covid == 1) {
+                        return '<span class="badge badge-danger">Covid</span>';
+                    } else {
+                        return '<span class="badge badge-info">Non Covid</span>';
+                    }
+                })
                 ->editColumn('status_sinkron', function($row) {
                     if($row->status_sinkron == 0) {
                         $status = '<i class="cil-warning" style="color: red"></i>';

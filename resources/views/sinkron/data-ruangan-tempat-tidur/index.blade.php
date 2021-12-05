@@ -39,6 +39,7 @@
                   {{-- <th>ID</th> --}}
                   <th>Aksi</th>
                   <th>#</th>
+                  <th>Status</th>
                   <th>TT</th>
                   <th>Ruang</th>
                   <th>Jml Ruang</th>
@@ -47,7 +48,6 @@
                   <th>Antrian</th>
                   <th>Prepare</th>
                   <th>Prepare Plan</th>
-                  <th>Covid</th>
                   <th>Tanggal Input</th>
                   <th>Tanggal Sinkron</th>
                 </tr>
@@ -107,6 +107,7 @@
         // {data: 'id', name: 'id'},
         {data: 'action', name: 'action', searchable: false, orderable: false},
         {data: 'status_sinkron', name: 'status_sinkron', searchable: false, orderable: false},
+        {data: 'covid', name: 'covid'},
         {data: 'tt', name: 'tt'},
         {data: 'ruang', name: 'ruang'},
         {data: 'jumlah_ruang', name: 'jumlah_ruang'},
@@ -115,7 +116,6 @@
         {data: 'antrian', name: 'antrian'},
         {data: 'prepare', name: 'prepare'},
         {data: 'prepare_plan', name: 'prepare_plan'},
-        {data: 'covid', name: 'covid'},
         {data: 'tanggal_input', name: 'tanggal_input'},
         {data: 'tanggal_sinkron', name: 'tanggal_sinkron'},
       ],
