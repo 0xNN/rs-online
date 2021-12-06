@@ -11,8 +11,8 @@
                       <i class="fa fa-align-justify"></i> User {{ $user->name }}</div>
                     <div class="card-body">
                         <h4>Name: {{ $user->name }}</h4>
-                        <h4>E-mail: {{ $user->email }}</h4>
-                        <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('Return') }}</a>
+                        <h4>Username: {{ $user->email }}</h4>
+                        <a href="{{ route('users.index') }}" class="btn btn-block btn-primary">{{ __('Kembali') }}</a>
                     </div>
                 </div>
               </div>

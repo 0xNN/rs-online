@@ -9,18 +9,18 @@
                   <div class="card text-white bg-primary">
                     <div class="card-body pb-0">
                       <div class="btn-group float-right">
-                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{-- <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <svg class="c-icon">
                             <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-settings"></use>
                           </svg>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div> --}}
                       </div>
-                      <div class="text-value-lg">0</div>
-                      <div>Pasien Masuk (Pengembangan)</div>
+                      <div class="text-value-lg">{{ $total['pm'] }}</div>
+                      <div>Pasien Masuk</div>
                     </div>
                     <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                      <canvas class="chart" id="card-chart1" height="70"></canvas>
+                      {{-- <canvas class="chart" id="card-chart1" height="70"></canvas> --}}
                     </div>
                   </div>
                 </div>
@@ -28,16 +28,16 @@
                 <div class="col-sm-6 col-lg-3">
                   <div class="card text-white bg-info">
                     <div class="card-body pb-0">
-                      <button class="btn btn-transparent p-0 float-right" type="button">
+                      {{-- <button class="btn btn-transparent p-0 float-right" type="button">
                         <svg class="c-icon">
                           <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-location-pin"></use>
                         </svg>
-                      </button>
-                      <div class="text-value-lg">0</div>
-                      <div>Pasien Komorbid (Pengembangan)</div>
+                      </button> --}}
+                      <div class="text-value-lg">{{ $total['pdk'] }}</div>
+                      <div>Pasien Dirawat Komorbid</div>
                     </div>
                     <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                      <canvas class="chart" id="card-chart2" height="70"></canvas>
+                      {{-- <canvas class="chart" id="card-chart2" height="70"></canvas> --}}
                     </div>
                   </div>
                 </div>
@@ -46,18 +46,18 @@
                   <div class="card text-white bg-warning">
                     <div class="card-body pb-0">
                       <div class="btn-group float-right">
-                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{-- <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <svg class="c-icon">
                             <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-settings"></use>
                           </svg>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div> --}}
                       </div>
-                      <div class="text-value-lg">0</div>
-                      <div>Non Komorbid (Pengembangan)</div>
+                      <div class="text-value-lg">{{ $total['pdnk'] }}</div>
+                      <div>Pasien Dirawat -Komorbid</div>
                     </div>
                     <div class="c-chart-wrapper mt-3" style="height:70px;">
-                      <canvas class="chart" id="card-chart3" height="70"></canvas>
+                      {{-- <canvas class="chart" id="card-chart3" height="70"></canvas> --}}
                     </div>
                   </div>
                 </div>
@@ -66,25 +66,25 @@
                   <div class="card text-white bg-danger">
                     <div class="card-body pb-0">
                       <div class="btn-group float-right">
-                        <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{-- <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <svg class="c-icon">
                             <use xlink:href="assets/icons/coreui/free-symbol-defs.svg#cui-settings"></use>
                           </svg>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div>
+                        <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div> --}}
                       </div>
-                      <div class="text-value-lg">0</div>
-                      <div>Pasien Keluar (Pengembangan)</div>
+                      <div class="text-value-lg">{{ $total['pk'] }}</div>
+                      <div>Pasien Keluar</div>
                     </div>
                     <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                      <canvas class="chart" id="card-chart4" height="70"></canvas>
+                      {{-- <canvas class="chart" id="card-chart4" height="70"></canvas> --}}
                     </div>
                   </div>
                 </div>
                 <!-- /.col-->
               </div>
               <!-- /.row-->
-              <div class="card">
+              {{-- <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-5">
@@ -143,15 +143,15 @@
                         <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
                     </div>
-                    {{-- <div class="col-sm-12 col-md mb-sm-2 mb-0">
+                    <div class="col-sm-12 col-md mb-sm-2 mb-0">
                       <div class="text-muted">Bounce Rate</div><strong>40.15%</strong>
                       <div class="progress progress-xs mt-2">
                         <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                       </div>
-                    </div> --}}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <!-- /.card-->
               {{-- <div class="row">
                 <div class="col-sm-6 col-lg-4">
@@ -632,7 +632,7 @@
 
 @section('javascript')
 
-    <script src="{{ asset('js/Chart.min.js') }}"></script>
-    <script src="{{ asset('js/coreui-chartjs.bundle.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/Chart.min.js') }}"></script>
+    <script src="{{ asset('js/coreui-chartjs.bundle.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/main.js') }}" defer></script> --}}
 @endsection

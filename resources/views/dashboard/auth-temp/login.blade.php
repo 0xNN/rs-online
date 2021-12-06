@@ -18,8 +18,8 @@
                         <i class="icon-user"></i>
                         </span>
                     </div>
-                    <input class="form-control" type="text" placeholder="{{ __('E-Mail Address') }}" name="email" value="{{ old('email') }}" required autofocus>
-                    @error('email')
+                    <input class="form-control" type="text" placeholder="{{ __('Username') }}" name="username" value="{{ old('username') }}" required autofocus>
+                    @error('username')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

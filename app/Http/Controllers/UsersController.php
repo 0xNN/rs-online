@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -66,11 +67,14 @@ class UsersController extends Controller
     {
         $validatedData = $request->validate([
             'name'       => 'required|min:1|max:256',
-            'email'      => 'required|email|max:256'
+            'email'      => 'required|max:256'
         ]);
         $user = User::find($id);
         $user->name       = $request->input('name');
         $user->email      = $request->input('email');
+        if($request->password != null) {
+            $user->password = Hash::make($request->input('password'));
+        }
         $user->save();
         $request->session()->flash('message', 'Successfully updated user');
         return redirect()->route('users.index');

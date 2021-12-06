@@ -11,8 +11,21 @@
 |
 */
 
+use App\Models\PasienDirawatKomorbid;
+use App\Models\PasienDirawatNonKomorbid;
+use App\Models\PasienKeluar;
+use App\Models\PasienMasuk;
+
 Route::group(['middleware' => ['get.menu']], function () {
-    Route::get('/', function () {           return view('dashboard.homepage'); });
+    Route::get('/', function () {
+        $total['pm'] = PasienMasuk::count();
+        $total['pk'] = PasienKeluar::count();
+        $total['pdk'] = PasienDirawatKomorbid::count();
+        $total['pdnk'] = PasienDirawatNonKomorbid::count();
+        return view('dashboard.homepage',compact(
+            'total'
+        )); 
+    });
 
     Route::group(['middleware' => ['role:user']], function () {
         Route::get('/colors', function () {     return view('dashboard.colors'); });
@@ -72,7 +85,7 @@ Route::group(['middleware' => ['get.menu']], function () {
         'destroy'   => 'resource.destroy'
     ]);
 
-    Route::group(['middleware' => ['role:admin']], function () {
+    Route::group(['middleware' => ['role:admin','auth']], function () {
         Route::prefix('pasien-masuk')->name('pasien-masuk.')->group(function(){
             Route::get('/',[App\Http\Controllers\PasienMasukController::class, 'index'])->name('index');
             Route::get('/create',[App\Http\Controllers\PasienMasukController::class, 'create'])->name('create');
