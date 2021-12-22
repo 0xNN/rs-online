@@ -59,7 +59,14 @@ class DataRuanganTempatTidurController extends Controller
         }
 
         if($request->ajax()) {
-            $model = DataRuanganTempatTidur::orderBy('id','desc')->get();
+            $role = auth()->user()->menuroles;
+            if(strlen($role) == 4) {
+                $model = DataRuanganTempatTidur::where('covid', 0)
+                                                ->orderBy('id','desc')->get();
+            } else if(strlen($role) > 4) {
+                $model = DataRuanganTempatTidur::where('covid', 1)
+                                                ->orderBy('id','desc')->get();
+            }
             return datatables()
                 ->of($model)
                 ->addIndexColumn()
